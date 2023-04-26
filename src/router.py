@@ -7,7 +7,6 @@ import time
 class Router:
     def __init__(self):
         self.routing_table = {}
-        self.table_print_control =
 
     def print_table(self):
         print()
