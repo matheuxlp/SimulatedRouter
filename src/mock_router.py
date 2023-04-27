@@ -1,7 +1,7 @@
 import socket
 import time
 import threading
-import os
+from datetime import datetime
 
 class MockRouter:
     def __init__(self, id, destination_network, output_interface, metric):
@@ -23,7 +23,7 @@ class MockRouter:
 
     def send(self):
         while True:
-            data = f"R:{self.destination_network},{self.output_interface},{self.metric},{self.id}".encode()
+            data = f"R;{self.destination_network},{self.output_interface},{self.metric},{self.id},{datetime.now()}".encode()
             self.s.sendall(data)
             time.sleep(10)
 
