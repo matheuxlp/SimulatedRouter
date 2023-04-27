@@ -1,13 +1,15 @@
 import socket
 import time
 import threading
+import os
 
 class MockRouter:
     def __init__(self, id, destination_network, output_interface, metric):
-        self.id = id
+        print(f"Initilizing Mock Router #{id}...")
         # Set instance variables to the input parameters
         self.destination_network = destination_network
         self.output_interface = output_interface
+        self.id = id
         self.metric = metric
         # Set two other instance variables to specific values
         self.HOST = '127.0.0.1'
@@ -15,19 +17,26 @@ class MockRouter:
         # Create a TCP/IP socket object
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Connect to a server at the given host and port
+        print(f"Connecting Mock Router #{id}...\n")
         self.s.connect((self.HOST, self.PORT))
 
 
     def send(self):
         while True:
-            data = f"R:{self.destination_network},{self.output_interface},{self.metric}".encode()
+            data = f"R:{self.destination_network},{self.output_interface},{self.metric},{self.id}".encode()
             self.s.sendall(data)
-            time.sleep(30)
+            time.sleep(10)
 
     def receive(self):
         while True:
             response = self.s.recv(1024)
-            print(f"Mock Router #{self.id} receiving data: {response.decode()}")
+            source, destination, ttl, tos, message = response.decode().split(',')
+            print(f"Mock Router #{self.id} receiving data...")
+            print('Source:', source)
+            print('Destination:', destination)
+            print('TTL:', ttl)
+            print('TOS:', tos)
+            print('Message:', message)
 
     def __del__(self):
         self.s.close()

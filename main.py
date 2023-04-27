@@ -16,6 +16,8 @@ class Main():
             s.bind((HOST, PORT))
             s.listen()
 
+            print("Starting Simulated Router...\n")
+
             while True:
                 conn, addr = s.accept()
                 t = threading.Thread(target=self.router.handle_connection, args=(conn, addr))
