@@ -36,7 +36,7 @@ class IpPacketSender:
         print("Sending Packet...")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:  
             s.connect((self.host, self.port))  
-            data = f"M:{self.source},{self.destination},{self.ttl},{self.tos},{self.message}".encode()  
+            data = f"M;{self.source},{self.destination},{self.ttl},{self.tos},{self.message}".encode()  
             s.sendall(data) 
 
     def run(self):

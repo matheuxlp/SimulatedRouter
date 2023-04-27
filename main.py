@@ -2,7 +2,6 @@ import threading
 import socket
 
 from src import router as Router
-from src import mock_router as Mock
 
 class Main():
     def __init__(self):
